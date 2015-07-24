@@ -1,6 +1,13 @@
 //modified by Dark 07.2015
-//more details http:///
+//this is arduino Uno program the run with David 3D laserscanner for automatic scan
+//David 3D laserscanner version :v3.10.4
+//arduino IDE version:1.0.5-r2
+//more details http://tieba.baidu.com/p/3916238768?pid=72116606973&cid=0#72116606973
+//any problems https://github.com/Dark-Guan/David-3D-laserscanner-automitive-scan-program/tree/4c9ae7f6e2a4a8083a65434cdbd340a0bcc05c8b
 //Added: One key starts a whole cicle scan
+//Added: Motor disenable when there is no cmd for 10 seconds
+//Added: set initial point function
+//Added: set the scan range
 
 ////////////////////////////////////////////////////////
 //Arduino Stepper Motor skecth listening to COM Port
@@ -14,8 +21,6 @@
 // Added : LED enlighted while motor moves forward
 // Added : Potentiometer to controll motor speed by hand
 // Added : second EasyDriver to controll a turntable
-
-// For all the Easydriver v.3 product details http://schmalzhaus.com/EasyDriver/
 // For all the DAVID-laserscanner product details http://www.david-laserscanner.com
 
 
@@ -23,7 +28,6 @@
 //Use this code at your own risk and have fun
 
 // Pins
-
 int LED = 11;           // names pin 11 as LED laser (placeholder for the laser)
 int BUTTON = 7;        // names pin 7 as BUTTON 
 int END = 8;           // names pin 8 as the endswitch
@@ -34,14 +38,15 @@ int stepEnable = 9;      //step motor set enable
 int ttstepEnable = 10;      //turnable plan step set enalble
 int ttdir = 5;          // names pin 4 as "dirpin" -Stepperdirection turntable
 int ttstep = 6;        // names pin 5 as "dirpin" -Steppersteps turntable
+
 //variables
-int temp = 0;          // Stores the speed value. The smaller the faster
-long range = 10000; // Stores how many steps will be made in total -Stepper laser
+long range = 10000; // Stores how many steps will be made in total -Stepper laser same as the scan range
 int ttrange = 200; // Stores how many steps will be made in total -Stepper Turntable
 int incomingByte = 0;	// for incoming serial data
 int val = 0;           // stores the state of the BUTTON pin
-int old_val = 0;
-int state = 0;
+int old_val = 0;   //stores the old state of the BUTTON pin
+//if state ==0 the program is on the manual mode,else if state==1 the program is on the cycle scanning mode
+int state = 0; //stores the state of the program 
 
 long stepsRecord = 0;	//steps traveled from the init point
 long stepsInit = 36000;	//line stepper moves form 0 to the set point default value
@@ -49,9 +54,9 @@ int turnCount = 17;	//model will turn turnCount times and scan 17 times
 
 long lastMessageTime = 0;	//record the last message time
 
-int slowSpeed = 1000;
-int fastSpeed = 6000;
-int normalSpeed = 3000;
+int slowSpeed = 1000; //slow travel speed
+int fastSpeed = 6000; //fasr travel speed
+int normalSpeed = 3000;//nomalSpeed
 
 void enableMotors() {
   digitalWrite(stepEnable, HIGH);
@@ -194,7 +199,7 @@ void loop() {
     lastMessageTime = Time;
   }
 
-  if (incomingByte == 79) {      // switches of the  when "O" is sent by DAVID
+  if (incomingByte == 79) {      // initial  when "O" is sent by DAVID
     //Serial.println("initial the positon");
     boolean isEndNothit = digitalRead(END);
     while (!isEndNothit) {
@@ -209,7 +214,7 @@ void loop() {
     incomingByte = 0;
   }
 
-  if (incomingByte == 108) {     // switches of the  when "l" is sent by DAVID
+  if (incomingByte == 108) {     // switches of the laser when "l" is sent by DAVID
     onOrOffLaser(false);
     //Serial.println("turn off the laser");
     incomingByte = 0;
@@ -393,7 +398,7 @@ void loop() {
         }
 
         boolean isEnd = digitalRead(END);      //if end switsh is hitted
-        if (isEnd || cycleRange == 0) {
+        if (isEnd || cycleRange < 0) {
           Serial.println("T");          //send to davide ;stop scan
           delay(4000);
 
