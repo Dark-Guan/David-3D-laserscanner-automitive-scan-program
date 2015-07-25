@@ -20,9 +20,9 @@ David-3D-laserscanner-automitive-scan-program-use-arduino Uno
 //Added: Switch on or off the light
 
 /////////////////////
-//funition available 
+#funition available 
 ////////////////////
-//1.Manual Mode:Connected to David or Send commands through a serial debugger
+#1.Manual Mode:Connected to David or Send commands through a serial debugger
 /////////////////////////////////////////////////////////////////////////////
 
 //a.Receive "O"(David 3D default setting) to initial the laser stepper
@@ -43,7 +43,7 @@ David-3D-laserscanner-automitive-scan-program-use-arduino Uno
     //"m1000" is same as "m+1000",they all get the laser stepper go up 1000 steps
     //and "m-1000" get the laser stepper go down 1000 steps
 
-//2.Auto Mode:Connected to David 
+#2.Auto Mode:Connected to David 
 ///////////////////////////////////
 //Before use the Auto Mode,
 //you should choose Motorized Laser Setup,connect the serial port of your Arduino Uno
@@ -55,5 +55,4 @@ David-3D-laserscanner-automitive-scan-program-use-arduino Uno
 //Trigger the button (or connect pin 7 to ground for a while )
 
 //a.only "mxxx"set by david works
-#define scanTime  17 //scan for scanTime times and one time overlap
-#define scanRange 25000 //set the scan to scanRange steps
+
