@@ -27,17 +27,26 @@ David-3D-laserscanner-automitive-scan-program-use-arduino Uno
 
 //a.Receive "O"(David 3D default setting) to initial the laser stepper
 //  laser stepper go up hit the end switch then go down to initialPoint
+
 //b.Receive "l"(David 3D default setting) to turn off the laser
+
 //c.Receive "L"(David 3D default setting) to turn on the laser
+
 //d.Receive "d"(David 3D not support default) to turn off the light
+
 //e.Receive "D"(David 3D not support default) to turn on the light
+
 //f.Receive "t"(David 3D not support default) to turn the turnalbe stepper manualTurnSteps steps
 
 //j.Receive "0"(David 3D default setting) to set the initial point 
+
 //h.Receive "P"(David 3D default setting) so go to the initial point that "0" command set 
     //or the default initial point
+
 //i.Receive "-"(David 3D default setting) ,laser stepper to go down 100 steps 
+
 //j.Receive "+"(David 3D default setting) ,laser stepper to go up 100 steps
+
 //k.Receive "mxxxx"(David 3D default setting),for example,"m1000","m-1000","m+1000"
     //"m1000" is same as "m+1000",they all get the laser stepper go up 1000 steps
     //and "m-1000" get the laser stepper go down 1000 steps
