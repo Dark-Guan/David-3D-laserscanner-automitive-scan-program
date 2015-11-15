@@ -1,6 +1,6 @@
 # David-3D-laserscanner-automitive-scan-program
 David-3D-laserscanner-automitive-scan-program-use-arduino Uno
-Another version of the program on PC Platform coded with Java is https://github.com/Dark-Guan/David2Printer/blob/master/README.md
+Another version of the program on PC Platform coded with Java is https://github.com/Dark-Guan/David2Printer
 
 ----------
 //Arduino Stepper Motor skecth listening to COM Port
